@@ -50,7 +50,7 @@ feature('Administración de Locations', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addLocation.validateSuccessMessage();
     });
-  });
+  }, { tags: ['@humo', '@regresion', '@ubicaciones'] });
 
   // ==================== ESCENARIO 2 ====================
   scenario('[CP-12] Intentar agregar una Location con campos obligatorios vacíos', async ({ page }) => {
@@ -85,5 +85,5 @@ feature('Administración de Locations', () => {
       await expect(addLocation.nameRequiredMessage).toBeVisible();
       await expect(addLocation.countryRequiredMessage).toBeVisible();
     });
-  });
+  }, { tags: ['@regresion', '@ubicaciones'] });
 });

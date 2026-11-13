@@ -24,7 +24,7 @@ feature('Autenticación en OrangeHRM', () => {
     await then('el sistema redirige al dashboard principal', async () => {
       await expect(page).toHaveURL('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index');
     });
-  });
+  }, { tags: ['@humo', '@regresion', '@autenticacion'] });
 
   // ==================== ESCENARIO 2 ====================
   scenario('[CP-02] Mostrar mensaje de error con usuario inválido', async ({ page }) => {
@@ -43,7 +43,7 @@ feature('Autenticación en OrangeHRM', () => {
       const errorMessage = await loginPage.invalidCredentials();
       expect(errorMessage).toBe('Invalid credentials');
     });
-  });
+  }, { tags: ['@regresion', '@autenticacion'] });
 
   // ==================== ESCENARIO 3 ====================
   scenario('[CP-03] Mostrar mensajes de error con campos vacíos', async ({ page }) => {
@@ -60,7 +60,7 @@ feature('Autenticación en OrangeHRM', () => {
     await then('el sistema debe mostrar 2 mensajes de campo requerido', async () => {
       await expect(loginPage.requiredMessages).toHaveCount(2);
     });
-  });
+  }, { tags: ['@regresion', '@autenticacion'] });
 
   // ==================== ESCENARIO 4 ====================
   scenario('[CP-04] Validar enlace de "Forgot your password"', async ({ page }) => {
@@ -77,5 +77,5 @@ feature('Autenticación en OrangeHRM', () => {
     await then('el sistema navega a la página de reset de password', async () => {
       await expect(page).toHaveURL('https://opensource-demo.orangehrmlive.com/web/index.php/auth/requestPasswordResetCode');
     });
-  });
+  }, { tags: ['@regresion', '@autenticacion'] });
 });

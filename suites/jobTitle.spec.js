@@ -57,7 +57,7 @@ feature('Administración de Job Titles', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addJobTitle.validateSuccessMessage();
     });
-  });
+  }, { tags: ['@humo', '@regresion', '@puestos'] });
 
   // ==================== ESCENARIO 2 (opcional) ====================
   scenario('[CP-06] Intentar agregar un Job Title con campos obligatorios vacíos', async ({ page }) => {
@@ -96,5 +96,5 @@ feature('Administración de Job Titles', () => {
       // Aquí validas el mensaje de error específico
       await expect(page.locator('.oxd-input-field-error-message')).toBeVisible();
     });
-  });
+  }, { tags: ['@regresion', '@puestos'] });
 });

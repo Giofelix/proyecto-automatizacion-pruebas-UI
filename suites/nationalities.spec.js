@@ -46,7 +46,7 @@ feature('Administración de Nationalities', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addNationality.validateSuccessMessage();
     });
-  });
+  }, { tags: ['@humo', '@regresion', '@nacionalidades'] });
 
   // ==================== ESCENARIO 2 ====================
   scenario('[CP-20] Intentar agregar una Nationality con campo obligatorio vacío', async ({ page }) => {
@@ -80,5 +80,5 @@ feature('Administración de Nationalities', () => {
     await then('el sistema debe mostrar un mensaje de error indicando que el campo es requerido', async () => {
       await expect(addNationality.nameRequiredMessage).toBeVisible();
     });
-  });
+  }, { tags: ['@regresion', '@nacionalidades'] });
 });

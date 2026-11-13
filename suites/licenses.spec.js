@@ -46,7 +46,7 @@ feature('Administración de Licenses', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addLicense.validateSuccessMessage();
     });
-  });
+  }, { tags: ['@humo', '@regresion', '@licencias'] });
 
   // ==================== ESCENARIO 2 ====================
   scenario('[CP-18] Intentar agregar un License con campo obligatorio vacío', async ({ page }) => {
@@ -80,5 +80,5 @@ feature('Administración de Licenses', () => {
     await then('el sistema debe mostrar un mensaje de error indicando que el campo es requerido', async () => {
       await expect(addLicense.nameRequiredMessage).toBeVisible();
     });
-  });
+  }, { tags: ['@regresion', '@licencias'] });
 });

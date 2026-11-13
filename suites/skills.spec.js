@@ -46,7 +46,7 @@ feature('Administración de Skills', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addSkill.validateSuccessMessage();
     });
-  });
+  }, { tags: ['@humo', '@regresion', '@habilidades'] });
 
   // ==================== ESCENARIO 2 ====================
   scenario('[CP-14] Intentar agregar un Skill con campo obligatorio vacío', async ({ page }) => {
@@ -80,5 +80,5 @@ feature('Administración de Skills', () => {
     await then('el sistema debe mostrar un mensaje de error indicando que el campo es requerido', async () => {
       await expect(addSkill.nameRequiredMessage).toBeVisible();
     });
-  });
+  }, { tags: ['@regresion', '@habilidades'] });
 });

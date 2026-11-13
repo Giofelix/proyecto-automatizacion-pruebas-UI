@@ -46,7 +46,7 @@ feature('Administración de Education', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addEducation.validateSuccessMessage();
     });
-  });
+  }, { tags: ['@humo', '@regresion', '@educacion'] });
 
   // ==================== ESCENARIO 2 ====================
   scenario('[CP-16] Intentar agregar un nivel de Education con campo obligatorio vacío', async ({ page }) => {
@@ -80,5 +80,5 @@ feature('Administración de Education', () => {
     await then('el sistema debe mostrar un mensaje de error indicando que el campo es requerido', async () => {
       await expect(addEducation.levelRequiredMessage).toBeVisible();
     });
-  });
+  }, { tags: ['@regresion', '@educacion'] });
 });

@@ -12,7 +12,7 @@ let testUsername = uniqueName('AutoUser');
 // para que el Employee Name dropdown lance la primera opción indiferentemente de la data interna.
 const testEmployee = 'a'; 
 
-test.describe.serial('Admin - Gestión Completa de Usuarios (CRUD)', () => {
+test.describe.serial('Admin - Gestión Completa de Usuarios (CRUD)', { tag: ['@regresion', '@usuarios'] }, () => {
     let loginPage, sidebar, userManagement, addUserPage, editUserPage;
 
     // Se ejecutará rigurosamente antes de CADA escenario
@@ -33,7 +33,7 @@ test.describe.serial('Admin - Gestión Completa de Usuarios (CRUD)', () => {
         await userManagement.userTable.waitFor({ state: 'visible', timeout: 10000 });
     });
 
-    test('[CP-07] [CREATE] Debe crear un nuevo usuario de sistema exitosamente', async ({ page }) => {
+    test('[CP-07] [CREATE] Debe crear un nuevo usuario de sistema exitosamente', { tag: ['@humo'] }, async ({ page }) => {
         // Clic en el botón Add
         await userManagement.clickAddRecord();
         await expect(addUserPage.headingTitle).toBeVisible();
