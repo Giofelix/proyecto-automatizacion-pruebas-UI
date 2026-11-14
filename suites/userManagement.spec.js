@@ -10,7 +10,7 @@ import { uniqueName } from '../utils/testData.js';
 let testUsername = uniqueName('AutoUser');
 // Asumimos que queremos buscar a cualquier empleado válido enviando una letra común (ej. "a")
 // para que el Employee Name dropdown lance la primera opción indiferentemente de la data interna.
-const testEmployee = 'a'; 
+const testEmployee = 'a';
 
 test.describe.serial('Admin - Gestión Completa de Usuarios (CRUD)', { tag: ['@regresion', '@usuarios'] }, () => {
     let loginPage, sidebar, userManagement, addUserPage, editUserPage;
@@ -71,7 +71,7 @@ test.describe.serial('Admin - Gestión Completa de Usuarios (CRUD)', { tag: ['@r
     test('[CP-09] [UPDATE] Debe editar el usuario encontrado y cambiar su contraseña', async ({ page }) => {
         // Buscar el usuario para enfocar la URL en la tabla correcta
         await userManagement.searchByUsername(testUsername);
-        
+
         // Hacemos clic en su ícono de edición individual usando el localizador dinámico
         await userManagement.clickEditUser(testUsername);
         await expect(editUserPage.headingTitle).toBeVisible();
