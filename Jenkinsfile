@@ -193,7 +193,10 @@ pipeline {
 
     environment {
         CI = 'true'
-        PLAYWRIGHT_BROWSERS_PATH = "${WORKSPACE}/.cache/playwright-browsers"
+        // Cache de navegadores FUERA del workspace (en JENKINS_HOME) para que
+        // cleanWs() no la borre en cada build y los navegadores no se
+        // reinstalen/descarguen de cero en cada ejecución.
+        PLAYWRIGHT_BROWSERS_PATH = "${JENKINS_HOME}/.cache/playwright-browsers"
         BASE_URL = "${params.APP_BASE_URL}" // Default para Modo Libre; Modo Despliegue lo sobreescribe por ambiente dentro del script
     }
 
@@ -373,12 +376,23 @@ pipeline {
                 expression { currentBuild.result != 'NOT_BUILT' }
             }
             steps {
-                echo '▶ Instalando navegadores de Playwright (según playwright.config.js)...'
+                echo '▶ Verificando cache de navegadores de Playwright...'
                 powershell '''
-                    if (!(Test-Path $env:PLAYWRIGHT_BROWSERS_PATH)) {
-                        New-Item -ItemType Directory -Force -Path $env:PLAYWRIGHT_BROWSERS_PATH | Out-Null
+                    $browsersPath = $env:PLAYWRIGHT_BROWSERS_PATH
+                    if (!(Test-Path $browsersPath)) {
+                        New-Item -ItemType Directory -Force -Path $browsersPath | Out-Null
                     }
-                    npx playwright install chromium firefox webkit
+
+                    $tieneChromium = Test-Path (Join-Path $browsersPath 'chromium-*')
+                    $tieneFirefox  = Test-Path (Join-Path $browsersPath 'firefox-*')
+                    $tieneWebkit   = Test-Path (Join-Path $browsersPath 'webkit-*')
+
+                    if ($tieneChromium -and $tieneFirefox -and $tieneWebkit) {
+                        Write-Host "✅ Navegadores ya presentes en cache ($browsersPath) -> se omite instalacion"
+                    } else {
+                        Write-Host "▶ Faltan navegadores en cache. Instalando en $browsersPath..."
+                        npx playwright install chromium firefox webkit
+                    }
                 '''
                 echo '✅ Navegadores listos'
             }
