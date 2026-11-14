@@ -1,6 +1,6 @@
 // suites/nationalities.spec.js
 import { test, expect } from '@playwright/test';
-import { given, when, then, and, feature, scenario } from 'gherkin-lite';
+import { given, when, then, and } from 'gherkin-lite';
 import { LoginPage } from '../pages/login/LoginPage.js';
 import { SidebarComponent } from '../pages/common/sidebarcomponent.js';
 import { TopbarComponent } from '../pages/common/TopbarComponent.js';
@@ -8,10 +8,10 @@ import { UserManagementPage } from '../pages/admin/user_management/UserManagemen
 import { AddNationality } from '../pages/admin/nationality/AddNationality.js';
 import { uniqueName } from '../utils/testData.js';
 
-feature('Administración de Nationalities', () => {
+test.describe('Feature : Administración de Nationalities', () => {
 
   // ==================== ESCENARIO 1 ====================
-  scenario('[CP-19] Agregar una nueva Nationality correctamente', async ({ page }) => {
+  test('Scenario : [CP-19] Agregar una nueva Nationality correctamente - Tags: @humo @regresion @nacionalidades', { tag: ['@humo', '@regresion', '@nacionalidades'] }, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const sidebar = new SidebarComponent(page);
     const topbar = new TopbarComponent(page);
@@ -46,10 +46,10 @@ feature('Administración de Nationalities', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addNationality.validateSuccessMessage();
     });
-  }, { tags: ['@humo', '@regresion', '@nacionalidades'] });
+  });
 
   // ==================== ESCENARIO 2 ====================
-  scenario('[CP-20] Intentar agregar una Nationality con campo obligatorio vacío', async ({ page }) => {
+  test('Scenario : [CP-20] Intentar agregar una Nationality con campo obligatorio vacío - Tags: @regresion @nacionalidades', { tag: ['@regresion', '@nacionalidades'] }, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const sidebar = new SidebarComponent(page);
     const topbar = new TopbarComponent(page);
@@ -80,5 +80,5 @@ feature('Administración de Nationalities', () => {
     await then('el sistema debe mostrar un mensaje de error indicando que el campo es requerido', async () => {
       await expect(addNationality.nameRequiredMessage).toBeVisible();
     });
-  }, { tags: ['@regresion', '@nacionalidades'] });
+  });
 });

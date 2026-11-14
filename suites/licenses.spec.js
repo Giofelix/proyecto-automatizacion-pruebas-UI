@@ -1,6 +1,6 @@
 // suites/licenses.spec.js
 import { test, expect } from '@playwright/test';
-import { given, when, then, and, feature, scenario } from 'gherkin-lite';
+import { given, when, then, and } from 'gherkin-lite';
 import { LoginPage } from '../pages/login/LoginPage.js';
 import { SidebarComponent } from '../pages/common/sidebarcomponent.js';
 import { TopbarComponent } from '../pages/common/TopbarComponent.js';
@@ -8,10 +8,10 @@ import { UserManagementPage } from '../pages/admin/user_management/UserManagemen
 import { AddLicense } from '../pages/admin/qualifications/AddLicense.js';
 import { uniqueName } from '../utils/testData.js';
 
-feature('Administración de Licenses', () => {
+test.describe('Feature : Administración de Licenses', () => {
 
   // ==================== ESCENARIO 1 ====================
-  scenario('[CP-17] Agregar un nuevo License correctamente', async ({ page }) => {
+  test('Scenario : [CP-17] Agregar un nuevo License correctamente - Tags: @humo @regresion @licencias', { tag: ['@humo', '@regresion', '@licencias'] }, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const sidebar = new SidebarComponent(page);
     const topbar = new TopbarComponent(page);
@@ -46,10 +46,10 @@ feature('Administración de Licenses', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addLicense.validateSuccessMessage();
     });
-  }, { tags: ['@humo', '@regresion', '@licencias'] });
+  });
 
   // ==================== ESCENARIO 2 ====================
-  scenario('[CP-18] Intentar agregar un License con campo obligatorio vacío', async ({ page }) => {
+  test('Scenario : [CP-18] Intentar agregar un License con campo obligatorio vacío - Tags: @regresion @licencias', { tag: ['@regresion', '@licencias'] }, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const sidebar = new SidebarComponent(page);
     const topbar = new TopbarComponent(page);
@@ -80,5 +80,5 @@ feature('Administración de Licenses', () => {
     await then('el sistema debe mostrar un mensaje de error indicando que el campo es requerido', async () => {
       await expect(addLicense.nameRequiredMessage).toBeVisible();
     });
-  }, { tags: ['@regresion', '@licencias'] });
+  });
 });

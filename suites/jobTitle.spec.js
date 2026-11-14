@@ -1,6 +1,6 @@
 // suites/job.spec.js (versión con escenarios más específicos)
 import { test, expect } from '@playwright/test';
-import { given, when, then, and, feature, scenario } from 'gherkin-lite';
+import { given, when, then, and } from 'gherkin-lite';
 import { LoginPage } from '../pages/login/LoginPage.js';
 import { SidebarComponent } from '../pages/common/sidebarcomponent.js';
 import { TopbarComponent } from '../pages/common/TopbarComponent.js';
@@ -8,7 +8,7 @@ import { UserManagementPage } from '../pages/admin/user_management/UserManagemen
 import { AddJobTitle } from '../pages/admin/job/AddJobTitle.js';
 import { uniqueName } from '../utils/testData.js';
 
-feature('Administración de Job Titles', () => {
+test.describe('Feature : Administración de Job Titles', () => {
 
   // Background: Configuración común para todos los escenarios
   let loginPage;
@@ -18,7 +18,7 @@ feature('Administración de Job Titles', () => {
   let addJobTitle;
 
   // ==================== ESCENARIO 1 ====================
-  scenario('[CP-05] Agregar un nuevo Job Title correctamente', async ({ page }) => {
+  test('Scenario : [CP-05] Agregar un nuevo Job Title correctamente - Tags: @humo @regresion @puestos', { tag: ['@humo', '@regresion', '@puestos'] }, async ({ page }) => {
     loginPage = new LoginPage(page);
     sidebar = new SidebarComponent(page);
     topbar = new TopbarComponent(page);
@@ -57,10 +57,10 @@ feature('Administración de Job Titles', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addJobTitle.validateSuccessMessage();
     });
-  }, { tags: ['@humo', '@regresion', '@puestos'] });
+  });
 
   // ==================== ESCENARIO 2 (opcional) ====================
-  scenario('[CP-06] Intentar agregar un Job Title con campos obligatorios vacíos', async ({ page }) => {
+  test('Scenario : [CP-06] Intentar agregar un Job Title con campos obligatorios vacíos - Tags: @regresion @puestos', { tag: ['@regresion', '@puestos'] }, async ({ page }) => {
     loginPage = new LoginPage(page);
     sidebar = new SidebarComponent(page);
     topbar = new TopbarComponent(page);
@@ -96,5 +96,5 @@ feature('Administración de Job Titles', () => {
       // Aquí validas el mensaje de error específico
       await expect(page.locator('.oxd-input-field-error-message')).toBeVisible();
     });
-  }, { tags: ['@regresion', '@puestos'] });
+  });
 });

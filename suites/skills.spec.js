@@ -1,6 +1,6 @@
 // suites/skills.spec.js
 import { test, expect } from '@playwright/test';
-import { given, when, then, and, feature, scenario } from 'gherkin-lite';
+import { given, when, then, and } from 'gherkin-lite';
 import { LoginPage } from '../pages/login/LoginPage.js';
 import { SidebarComponent } from '../pages/common/sidebarcomponent.js';
 import { TopbarComponent } from '../pages/common/TopbarComponent.js';
@@ -8,10 +8,10 @@ import { UserManagementPage } from '../pages/admin/user_management/UserManagemen
 import { AddSkill } from '../pages/admin/qualifications/AddSkill.js';
 import { uniqueName } from '../utils/testData.js';
 
-feature('Administración de Skills', () => {
+test.describe('Feature : Administración de Skills', () => {
 
   // ==================== ESCENARIO 1 ====================
-  scenario('[CP-13] Agregar un nuevo Skill correctamente', async ({ page }) => {
+  test('Scenario : [CP-13] Agregar un nuevo Skill correctamente - Tags: @humo @regresion @habilidades', { tag: ['@humo', '@regresion', '@habilidades'] }, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const sidebar = new SidebarComponent(page);
     const topbar = new TopbarComponent(page);
@@ -46,10 +46,10 @@ feature('Administración de Skills', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addSkill.validateSuccessMessage();
     });
-  }, { tags: ['@humo', '@regresion', '@habilidades'] });
+  });
 
   // ==================== ESCENARIO 2 ====================
-  scenario('[CP-14] Intentar agregar un Skill con campo obligatorio vacío', async ({ page }) => {
+  test('Scenario : [CP-14] Intentar agregar un Skill con campo obligatorio vacío - Tags: @regresion @habilidades', { tag: ['@regresion', '@habilidades'] }, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const sidebar = new SidebarComponent(page);
     const topbar = new TopbarComponent(page);
@@ -80,5 +80,5 @@ feature('Administración de Skills', () => {
     await then('el sistema debe mostrar un mensaje de error indicando que el campo es requerido', async () => {
       await expect(addSkill.nameRequiredMessage).toBeVisible();
     });
-  }, { tags: ['@regresion', '@habilidades'] });
+  });
 });

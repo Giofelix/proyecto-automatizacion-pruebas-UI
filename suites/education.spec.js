@@ -1,6 +1,6 @@
 // suites/education.spec.js
 import { test, expect } from '@playwright/test';
-import { given, when, then, and, feature, scenario } from 'gherkin-lite';
+import { given, when, then, and } from 'gherkin-lite';
 import { LoginPage } from '../pages/login/LoginPage.js';
 import { SidebarComponent } from '../pages/common/sidebarcomponent.js';
 import { TopbarComponent } from '../pages/common/TopbarComponent.js';
@@ -8,10 +8,10 @@ import { UserManagementPage } from '../pages/admin/user_management/UserManagemen
 import { AddEducation } from '../pages/admin/qualifications/AddEducation.js';
 import { uniqueName } from '../utils/testData.js';
 
-feature('Administración de Education', () => {
+test.describe('Feature : Administración de Education', () => {
 
   // ==================== ESCENARIO 1 ====================
-  scenario('[CP-15] Agregar un nuevo nivel de Education correctamente', async ({ page }) => {
+  test('Scenario : [CP-15] Agregar un nuevo nivel de Education correctamente - Tags: @humo @regresion @educacion', { tag: ['@humo', '@regresion', '@educacion'] }, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const sidebar = new SidebarComponent(page);
     const topbar = new TopbarComponent(page);
@@ -46,10 +46,10 @@ feature('Administración de Education', () => {
     await then('el sistema debe mostrar un mensaje de éxito', async () => {
       await addEducation.validateSuccessMessage();
     });
-  }, { tags: ['@humo', '@regresion', '@educacion'] });
+  });
 
   // ==================== ESCENARIO 2 ====================
-  scenario('[CP-16] Intentar agregar un nivel de Education con campo obligatorio vacío', async ({ page }) => {
+  test('Scenario : [CP-16] Intentar agregar un nivel de Education con campo obligatorio vacío - Tags: @regresion @educacion', { tag: ['@regresion', '@educacion'] }, async ({ page }) => {
     const loginPage = new LoginPage(page);
     const sidebar = new SidebarComponent(page);
     const topbar = new TopbarComponent(page);
@@ -80,5 +80,5 @@ feature('Administración de Education', () => {
     await then('el sistema debe mostrar un mensaje de error indicando que el campo es requerido', async () => {
       await expect(addEducation.levelRequiredMessage).toBeVisible();
     });
-  }, { tags: ['@regresion', '@educacion'] });
+  });
 });
