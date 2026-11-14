@@ -124,7 +124,7 @@ pipeline {
         // ─── Modo Libre (solo tiene efecto en FREE_MODE_BRANCH) ───
         choice(
             name: 'TEST_SUITE',
-            choices: ['auto', 'smoke', 'regression', 'all'],
+            choices: ['auto', 'humo', 'regresion', 'todo'],
             description: "[MODO LIBRE - ${FREE_MODE_BRANCH}] Suite a correr. \"auto\" decide según la rama."
         )
         string(
