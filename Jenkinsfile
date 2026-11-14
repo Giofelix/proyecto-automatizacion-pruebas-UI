@@ -219,6 +219,12 @@ pipeline {
                 script {
                     def causes = currentBuild.getBuildCauses()
                     env.IS_MANUAL_BUILD = causes.any { it._class?.contains('UserIdCause') } ? 'true' : 'false'
+                    // Build disparado por un trigger "Build periodically" (cron) configurado
+                    // en Jenkins (Schedule), NO por pollSCM. A diferencia de un build por
+                    // push, un schedule periódico no busca "qué cambió": existe para correr
+                    // la suite completa como chequeo de salud recurrente. Por eso se trata
+                    // igual que FORCE_FULL_SUITE y se salta la Detección de Cambios.
+                    env.IS_TIMER_BUILD = causes.any { it._class?.contains('TimerTriggerCause') } ? 'true' : 'false'
                     env.IS_DEPLOY_ONLY_BRANCH = (env.BRANCH_NAME == DEPLOY_ONLY_BRANCH) ? 'true' : 'false'
 
                     def hasDeploymentParams = params.MODULES?.trim() && params.ENVIRONMENTS?.trim()
@@ -239,7 +245,8 @@ pipeline {
                     echo "  📌 Build número:     #${env.BUILD_NUMBER}"
                     echo "  🏷  Nombre build:     ${currentBuild.displayName}"
                     echo "  🌿 Rama:             ${env.BRANCH_NAME ?: 'desconocida'}"
-                    echo "  🎯 Tipo:             ${env.IS_MANUAL_BUILD == 'true' ? '👤 MANUAL' : '🤖 AUTOMÁTICO (push)'}"
+                    def tipoBuild = env.IS_MANUAL_BUILD == 'true' ? '👤 MANUAL' : (env.IS_TIMER_BUILD == 'true' ? '⏰ SCHEDULE (periódico)' : '🤖 AUTOMÁTICO (push)')
+                    echo "  🎯 Tipo:             ${tipoBuild}"
                     echo "  🚦 Modo Pipeline:    ${env.PIPELINE_MODE == 'DEPLOYMENT' ? '🚀 DESPLIEGUE DIRIGIDO' : '🔧 MODO LIBRE'}"
                     echo "  👤 Lanzado por:      ${causes[0]?.shortDescription ?: 'automático'}"
                     echo "  🕐 Hora inicio:      ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
@@ -314,6 +321,7 @@ pipeline {
                     expression { currentBuild.result != 'NOT_BUILT' }
                     expression { env.PIPELINE_MODE == 'FREE' }
                     expression { env.IS_MANUAL_BUILD == 'false' }
+                    expression { env.IS_TIMER_BUILD == 'false' }
                     expression { !params.FORCE_FULL_SUITE }
                 }
             }
@@ -469,9 +477,9 @@ pipeline {
                 script {
                     echo '▶ Construyendo patrón --grep según parámetros y rama...'
 
-                    if (env.IS_MANUAL_BUILD == 'true' || params.FORCE_FULL_SUITE) {
+                    if (env.IS_MANUAL_BUILD == 'true' || env.IS_TIMER_BUILD == 'true' || params.FORCE_FULL_SUITE) {
                         echo '▶ Modo: Usando parámetros del formulario'
-                        echo '  (build manual o FORCE_FULL_SUITE activo)'
+                        echo '  (build manual, schedule periódico o FORCE_FULL_SUITE activo)'
 
                         def suite = params.TEST_SUITE
                         if (suite == 'auto') {

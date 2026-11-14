@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "report:playwright": "playwright show-report",
+    "allure:generate": "node -e \"require('fs').rmSync('allure-report',{recursive:true,force:true})\" && allure generate allure-results -o allure-report",
+    "report:allure": "allure open allure-report",
+    "allure:clean": "node -e \"require('fs').rmSync('allure-results',{recursive:true,force:true});require('fs').rmSync('allure-report',{recursive:true,force:true})\"",
+    "test:report": "npm run test && npm run allure:generate && npm run report:allure"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
