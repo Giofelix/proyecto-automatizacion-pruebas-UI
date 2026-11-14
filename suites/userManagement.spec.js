@@ -99,9 +99,11 @@ test.describe.serial('Admin - Gestión Completa de Usuarios (CRUD)', { tag: ['@r
     test('[CP-10] [DELETE] Debe borrar exitosamente al usuario y su registro debe desaparecer', async ({ page }) => {
         // Buscar la entidad
         await userManagement.searchByUsername(testUsername);
+        //console.log("Entidad:", testUsername);
 
         // Presionar ícono de papelera de ESA Fila particular
         await userManagement.clickDeleteUser(testUsername);
+        //console.log("Entidad luego de click:", testUsername);
 
         // Modal estandarizado de OrangeHRM "Are you sure?"
         const confirmDeleteButton = page.getByRole('button', { name: 'Yes, Delete' });
