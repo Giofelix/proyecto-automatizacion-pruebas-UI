@@ -9,6 +9,7 @@ export class AddEducation {
 
         this.confirmationToast = page.locator('.oxd-toast-container .oxd-toast--success');
         this.levelRequiredMessage = page.locator('.oxd-input-group:has(label:has-text("Level")) .oxd-input-field-error-message');
+        //console.log("Nivel educativo a registrar:", level);
     }
 
     async fillForm(level) {
