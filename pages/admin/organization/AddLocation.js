@@ -16,6 +16,8 @@ export class AddLocation {
         this.fax = page.locator('.oxd-input-group:has(label:text-is("Fax")) input');
         this.address = page.locator('.oxd-input-group:has(label:text-is("Address")) textarea');
         this.notes = page.locator('.oxd-input-group:has(label:text-is("Notes")) textarea');
+        //console.log ("Datos antes de llenar:", name, city, country, stateProvince, zipPostalCode, phone, fax, address, notes, country);
+
 
         // Botones
         this.buttonCancel = page.locator('button:has-text("Cancel")');
