@@ -34,6 +34,7 @@ export class AddLocation {
     }
 
     async fillForm({ name, city, country, stateProvince, zipPostalCode, phone, fax, address, notes } = {}) {
+        //console.log ("Datos antes de llenar:", name, city, country, stateProvince, zipPostalCode, phone, fax, address, notes, country);
         if (name !== undefined) await this.name.fill(name);
         if (city) await this.city.fill(city);
         if (stateProvince) await this.stateProvince.fill(stateProvince);
