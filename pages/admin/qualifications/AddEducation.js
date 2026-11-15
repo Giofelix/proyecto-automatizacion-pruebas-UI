@@ -12,6 +12,7 @@ export class AddEducation {
     }
 
     async fillForm(level) {
+        //console.log("Nivel educativo a registrar:", level);
         await this.level.fill(level);
     }
 

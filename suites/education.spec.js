@@ -37,6 +37,7 @@ test.describe('Feature : Administración de Education', () => {
 
     await and('completa el formulario con datos válidos', async () => {
       await addEducation.fillForm(uniqueName('AutoEdu'));
+      //console.log("Formulario de Education diligenciado");
     });
 
     await and('guarda el nuevo registro', async () => {
