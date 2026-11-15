@@ -29,6 +29,7 @@ export class AddLocation {
     }
 
     async selectCountry(countryName) {
+        //console.log("Datos de Countrys", countryName);
         await this.countryDropdown.click();
         await this.page.getByRole('option', { name: countryName }).click();
     }
