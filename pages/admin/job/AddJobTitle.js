@@ -24,6 +24,7 @@ export class AddJobTitle {
 
 
     async fillForm(jobTitle, jobDescription, addNote) {
+        //console.log('Job Title:', jobTitle);
         await this.jobTitle.fill(jobTitle);
         await this.jobDescription.fill(jobDescription);
         await this.addNote.fill(addNote);
